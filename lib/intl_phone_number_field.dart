@@ -30,7 +30,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final CountryConfig countryConfig;
   final PhoneConfig phoneConfig;
   final CountryCodeModel initCountry;
-  final dynamic Function(IntPhoneNumber number)? onChanged;
+  final dynamic Function(IntPhoneNumber number)? onInputChanged;
   final double betweenPadding;
   final MaskedInputFormatter formatter;
   final List<TextInputFormatter> inputFormatters;
@@ -43,7 +43,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       MaskedInputFormatter? formatter,
       CountryCodeModel? initCountry,
       this.betweenPadding = 23,
-      this.onChanged,
+      this.onInputChanged,
       this.loadFromJson,
       DialogConfig? dialogConfig,
       CountryConfig? countryConfig,
@@ -106,8 +106,8 @@ class _InternationalPhoneNumberInputState
                               setState(() {
                                 selected = countryCodeModel;
                               });
-                              if (widget.onChanged != null) {
-                                widget.onChanged!(IntPhoneNumber(
+                              if (widget.onInputChanged != null) {
+                                widget.onInputChanged!(IntPhoneNumber(
                                     code: selected.code,
                                     dial_code: selected.dial_code,
                                     number: widget.controller.text
@@ -165,8 +165,8 @@ class _InternationalPhoneNumberInputState
               showCursor: false,
               borderWidth: widget.phoneConfig.borderWidth,
               onChanged: (text) {
-                if (widget.onChanged != null) {
-                  widget.onChanged!(IntPhoneNumber(
+                if (widget.onInputChanged != null) {
+                  widget.onInputChanged!(IntPhoneNumber(
                       code: selected.code,
                       dial_code: selected.dial_code,
                       number: text.trimLeft().trimRight()));
@@ -204,6 +204,7 @@ class IntPhoneNumber {
       {required this.code, required this.dial_code, required this.number});
   String get fullNumber => "$dial_code $number";
   String get rawNumber => number.replaceAll(" ", "");
+  String get rawDialCode => dial_code.replaceAll("+", "");
   String get rawFullNumber =>
       fullNumber.replaceAll(" ", "").replaceAll("+", "");
 }

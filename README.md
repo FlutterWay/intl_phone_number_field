@@ -1,7 +1,7 @@
 
 # intl_phone_number_field
 
-A customised Flutter TextFormField to input international phone number along with country code.
+A customised Flutter TextFormField to input international phone number along with the country code.
 
 <img src="https://raw.githubusercontent.com/FlutterWay/files/main/intl_phone_number_field/intl_phone_number_slayt.png"/>
 
@@ -92,15 +92,27 @@ InternationalPhoneNumberInput(
 | formatter                           | MaskedInputFormatter             | MaskedInputFormatter('### ### ## ##') |
 | initCountry                         | CountryCodeModel                 | CountryCodeModel(name: "United States", dial_code: "+1", code: "US") |
 | betweenPadding                      | double                           |                  23                   |
-| onChanged                           | Function(IntPhoneNumber number)  |                 null                  |
+| onInputChanged                      | Function(IntPhoneNumber number)  |                 null                  |
 | loadFromJson                        | Future<String?> Function()       |                 null                  |
 | dialogConfig                        | DialogConfig                     |            DialogConfig()             |
 | countryConfig                       | CountryConfig                    |            CountryConfig()            |
 | phoneConfig                         | PhoneConfig                      |            PhoneConfig()              |
 
+## IntPhoneNumber
+Function "onInputChanged" will return an object with IntPhoneNumber type to you. <br></br>
+IntPhoneNumber:
+```dart
+print(phone.code);          //US
+print(phone.dial_code);     //+1
+print(phone.number);        //553 142 88 74
+print(phone.rawFullNumber); //15531428874
+print(phone.rawNumber);     //5531428874
+print(phone.rawDialCode);   //1
+```
+
 ## Load JSON data
 You can fetch the country codes from your own json file and upload them to the package.<br></br>
-For this, you must fill your json file in a certain format. Example about this:
+For that, you must fill your json file with a certain format. Example on this:
 
 ```json
 [
@@ -130,7 +142,7 @@ Future<String> loadFromJson() async {
  }
 ```
 
-See the `example` file for a detailed example
+See the `example` file for a more detailed example
 
 
 ## To Contribute

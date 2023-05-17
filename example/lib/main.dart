@@ -55,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                InternationalPhoneNumberInput(loadFromJson: loadFromJson),
                 InternationalPhoneNumberInput(
                   height: 60,
                   controller: controller,
@@ -64,8 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   initCountry: CountryCodeModel(
                       name: "United States", dial_code: "+1", code: "US"),
                   betweenPadding: 23,
-                  onChanged: (phone) {
+                  onInputChanged: (phone) {
                     print(phone.code);
+                    print(phone.dial_code);
+                    print(phone.number);
+                    print(phone.rawFullNumber);
+                    print(phone.rawNumber);
+                    print(phone.rawDialCode);
                   },
                   loadFromJson: loadFromJson,
                   dialogConfig: DialogConfig(
