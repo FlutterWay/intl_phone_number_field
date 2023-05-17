@@ -71,7 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: const Color(0xFF444448),
                     searchBoxBackgroundColor: const Color(0xFF56565a),
                     searchBoxIconColor: const Color(0xFFFAFAFA),
-                    overflowCountryNameLimit: 25,
+                    countryItemHeight: 55,
+                    topBarColor: const Color(0xFF1B1C24),
+                    selectedItemColor: const Color(0xFF56565a),
                     selectedIcon: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Image.asset(

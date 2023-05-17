@@ -25,6 +25,7 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
   final TextEditingController searchController = TextEditingController();
   @override
   void initState() {
+    print(widget.selected);
     mainCountries = widget.countries;
     searchCountries = widget.countries.toList();
     super.initState();
@@ -34,73 +35,89 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.8,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 22),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-                child: Container(
-              height: 5,
-              width: 145,
-              decoration: BoxDecoration(
-                  color: const Color(0xFFBEBEBE),
-                  borderRadius: BorderRadius.circular(30)),
-            )),
-            const SizedBox(height: 25),
-            Text(
-              "Country Codes",
-              style: widget.dialogConfig.titleStyle,
-            ),
-            const SizedBox(height: 14),
-            RixaTextField(
-              hintText: "Search",
-              controller: searchController,
-              textStyle: widget.dialogConfig.searchBoxTextStyle,
-              hintStyle: widget.dialogConfig.searchBoxHintStyle,
-              prefixIcon: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 24),
-                child: Icon(
-                  Icons.search,
-                  color: widget.dialogConfig.searchBoxIconColor,
-                  size: 20,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 22),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Center(
+                  child: Container(
+                height: 5,
+                width: 145,
+                decoration: BoxDecoration(
+                    color: widget.dialogConfig.topBarColor,
+                    borderRadius: BorderRadius.circular(30)),
+              )),
+              const SizedBox(height: 25),
+              Text(
+                "Country Codes",
+                style: widget.dialogConfig.titleStyle,
+              ),
+              const SizedBox(height: 14),
+              RixaTextField(
+                hintText: "Search",
+                controller: searchController,
+                textStyle: widget.dialogConfig.searchBoxTextStyle,
+                hintStyle: widget.dialogConfig.searchBoxHintStyle,
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 24),
+                  child: Icon(
+                    Icons.search,
+                    color: widget.dialogConfig.searchBoxIconColor,
+                    size: 20,
+                  ),
                 ),
+                onChanged: (value) {
+                  search(value);
+                },
+                isUnderline: false,
+                noInputBorder: true,
+                backgroundColor: widget.dialogConfig.searchBoxBackgroundColor,
               ),
-              onChanged: (value) {
-                search(value);
-              },
-              isUnderline: false,
-              noInputBorder: true,
-              backgroundColor: widget.dialogConfig.searchBoxBackgroundColor,
+            ]),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                if (widget.selected != null &&
+                    searchCountries.any(
+                        (element) => element.code == widget.selected!.code))
+                  TextButton(
+                      onPressed: () {
+                        widget.onSelected(widget.selected!);
+                        Navigator.pop(context);
+                      },
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: CountryWidget(
+                          countryCodeModel: widget.selected!,
+                          isSelected: true,
+                          dialogConfig: widget.dialogConfig)),
+                for (var country in searchCountries
+                    .where((element) => element.code != widget.selected!.code))
+                  TextButton(
+                      onPressed: () {
+                        widget.onSelected(country);
+                        Navigator.pop(context);
+                      },
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: CountryWidget(
+                          countryCodeModel: country,
+                          isSelected: false,
+                          dialogConfig: widget.dialogConfig))
+              ],
             ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ListView(
-                children: [
-                  for (var country in searchCountries)
-                    TextButton(
-                        onPressed: () {
-                          widget.onSelected(country);
-                          Navigator.pop(context);
-                        },
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: CountryWidget(
-                            countryCodeModel: country,
-                            isSelected: widget.selected != null &&
-                                widget.selected!.code == country.code &&
-                                widget.selected!.dial_code ==
-                                    country.dial_code &&
-                                widget.selected!.name == country.name,
-                            dialogConfig: widget.dialogConfig))
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class DialogConfig {
-  Color backgroundColor, searchBoxBackgroundColor, searchBoxIconColor;
+  Color backgroundColor, searchBoxBackgroundColor, searchBoxIconColor,selectedItemColor,topBarColor;
   TextStyle textStyle, searchBoxTextStyle, searchBoxHintStyle, titleStyle;
-  int overflowCountryNameLimit;
   Widget selectedIcon;
+  double countryItemHeight;
   DialogConfig({
     this.backgroundColor = const Color(0xFF444448),
     this.searchBoxBackgroundColor = const Color(0xFF56565a),
     this.searchBoxIconColor = const Color(0xFFFAFAFA),
-    this.overflowCountryNameLimit = 25,
+    this.countryItemHeight=55,
+    this.selectedItemColor=const Color(0xFF56565a),
+    this.topBarColor=const Color(0xFF1B1C24),
     Widget? selectedIcon,
     TextStyle? textStyle,
     TextStyle? searchBoxTextStyle,
