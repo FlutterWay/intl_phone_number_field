@@ -54,7 +54,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
         formatter = formatter ?? MaskedInputFormatter('### ### ## ##'),
         initCountry = initCountry ??
             CountryCodeModel(
-                name: "United States", dial_code: "+1", code: "us"),
+                name: "United States", dial_code: "+1", code: "US"),
         phoneConfig = phoneConfig ?? PhoneConfig();
 
   @override
@@ -182,7 +182,6 @@ class _InternationalPhoneNumberInputState
     } else {
       countries = await GeneralUtil.loadJson();
     }
-
     setState(() {});
   }
 
