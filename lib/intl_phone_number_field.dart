@@ -49,12 +49,13 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       CountryConfig? countryConfig,
       PhoneConfig? phoneConfig})
       : dialogConfig = dialogConfig ?? DialogConfig(),
-        controller = TextEditingController(),
-        countryConfig = CountryConfig(),
+        controller = controller ?? TextEditingController(),
+        countryConfig = countryConfig ?? CountryConfig(),
         formatter = formatter ?? MaskedInputFormatter('### ### ## ##'),
-        initCountry = CountryCodeModel(
-            name: "United States", dial_code: "+1", code: "us"),
-        phoneConfig = PhoneConfig();
+        initCountry = initCountry ??
+            CountryCodeModel(
+                name: "United States", dial_code: "+1", code: "us"),
+        phoneConfig = phoneConfig ?? PhoneConfig();
 
   @override
   State<InternationalPhoneNumberInput> createState() =>

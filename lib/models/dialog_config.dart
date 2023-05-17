@@ -35,7 +35,7 @@ class DialogConfig {
                 color: const Color(0xFFFAFAFA).withOpacity(0.7),
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
-        selectedIcon = Padding(
+        selectedIcon = selectedIcon??Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Image.asset(
             "packages/intl_phone_number_field/assets/check.png",
