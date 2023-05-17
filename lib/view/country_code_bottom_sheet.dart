@@ -25,7 +25,6 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
   final TextEditingController searchController = TextEditingController();
   @override
   void initState() {
-    print(widget.selected);
     mainCountries = widget.countries;
     searchCountries = widget.countries.toList();
     super.initState();
