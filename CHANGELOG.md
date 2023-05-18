@@ -25,3 +25,7 @@
 ## 0.1.2
 
 * Dart sdk setted sdk: '>=2.18.5 <4.0.0'
+  
+## 0.1.3
+
+* Readme updated
