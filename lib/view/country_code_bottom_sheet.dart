@@ -82,7 +82,7 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
               children: [
                 if (widget.selected != null &&
                     searchCountries.any(
-                        (element) => element.code == widget.selected!.code))
+                        (element) => element.code == widget.selected?.code))
                   TextButton(
                       onPressed: () {
                         widget.onSelected(widget.selected!);
@@ -98,7 +98,7 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
                           isSelected: true,
                           dialogConfig: widget.dialogConfig)),
                 for (var country in searchCountries
-                    .where((element) => element.code != widget.selected!.code))
+                    .where((element) => element.code != widget.selected?.code))
                   TextButton(
                       onPressed: () {
                         widget.onSelected(country);
