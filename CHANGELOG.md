@@ -33,3 +33,8 @@
 ## 0.1.4
 
 * Changes made
+  
+## 0.1.5
+
+* Added decoration, focusNode, autoFocus, showCursor, backgroundColor parameters to PhoneConfig
+* Any default formatter will no longer work if the formatter parameter is not entered 

@@ -32,7 +32,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final CountryCodeModel initCountry;
   final dynamic Function(IntPhoneNumber number)? onInputChanged;
   final double betweenPadding;
-  final MaskedInputFormatter formatter;
+  final MaskedInputFormatter? formatter;
   final List<TextInputFormatter> inputFormatters;
   final Future<String?> Function()? loadFromJson;
   InternationalPhoneNumberInput(
@@ -40,18 +40,17 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       TextEditingController? controller,
       this.height = 60,
       this.inputFormatters = const [],
-      MaskedInputFormatter? formatter,
       CountryCodeModel? initCountry,
       this.betweenPadding = 23,
       this.onInputChanged,
       this.loadFromJson,
+      this.formatter,
       DialogConfig? dialogConfig,
       CountryConfig? countryConfig,
       PhoneConfig? phoneConfig})
       : dialogConfig = dialogConfig ?? DialogConfig(),
         controller = controller ?? TextEditingController(),
         countryConfig = countryConfig ?? CountryConfig(),
-        formatter = formatter ?? MaskedInputFormatter('### ### ## ##'),
         initCountry = initCountry ??
             CountryCodeModel(
                 name: "United States", dial_code: "+1", code: "US"),
@@ -154,15 +153,21 @@ class _InternationalPhoneNumberInputState
               hintStyle: widget.phoneConfig.hintStyle,
               textStyle: widget.phoneConfig.textStyle,
               controller: widget.controller,
+              focusNode: widget.phoneConfig.focusNode,
+              decoration: widget.phoneConfig.decoration,
+              backgroundColor: widget.phoneConfig.backgroundColor,
               radius: widget.phoneConfig.radius,
               isUnderline: false,
               textInputType: TextInputType.number,
               expands: true,
-              autoFocus: true,
-              inputFormatters: [...widget.inputFormatters, widget.formatter],
+              autoFocus: widget.phoneConfig.autoFocus,
+              inputFormatters: [
+                ...widget.inputFormatters,
+                if (widget.formatter != null) widget.formatter!
+              ],
               focusedColor: widget.phoneConfig.focusedColor,
               enabledColor: widget.phoneConfig.enabledColor,
-              showCursor: false,
+              showCursor: widget.phoneConfig.showCursor,
               borderWidth: widget.phoneConfig.borderWidth,
               onChanged: (text) {
                 if (widget.onInputChanged != null) {

@@ -26,6 +26,7 @@ class RixaTextField extends StatelessWidget {
   final bool autoFocus;
   final List<TextInputFormatter> inputFormatters;
   final FocusNode? focusNode;
+  final Decoration? decoration;
   RixaTextField({
     super.key,
     required this.hintText,
@@ -46,6 +47,7 @@ class RixaTextField extends StatelessWidget {
     this.inputFormatters = const [],
     this.autoFocus = false,
     this.width,
+    this.decoration,
     this.labelStyle,
     this.isUnderline = true,
     this.expands = false,
@@ -88,8 +90,10 @@ class RixaTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(radius)),
+      decoration: decoration ??
+          BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(radius)),
       padding: padding,
       child: TextField(
         controller: controller,

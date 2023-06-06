@@ -77,6 +77,10 @@ InternationalPhoneNumberInput(
     radius: 8,
     hintText: "Phone Number",
     borderWidth: 2,
+    backgroundColor: Colors.transparent,
+    decoration: null,
+    autoFocus: true,
+    showCursor: false,
     textStyle: const TextStyle(
         color: Colors.black,
         fontSize: 16,
