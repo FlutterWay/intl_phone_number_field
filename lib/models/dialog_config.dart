@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 
 class DialogConfig {
-  Color backgroundColor, searchBoxBackgroundColor, searchBoxIconColor,selectedItemColor,topBarColor;
+  Color backgroundColor,
+      searchBoxBackgroundColor,
+      searchBoxIconColor,
+      selectedItemColor,
+      topBarColor;
   TextStyle textStyle, searchBoxTextStyle, searchBoxHintStyle, titleStyle;
   Widget selectedIcon;
-  double countryItemHeight;
+  double countryItemHeight, itemFlagSize;
+  bool flatFlag;
   DialogConfig({
     this.backgroundColor = const Color(0xFF444448),
     this.searchBoxBackgroundColor = const Color(0xFF56565a),
     this.searchBoxIconColor = const Color(0xFFFAFAFA),
-    this.countryItemHeight=55,
-    this.selectedItemColor=const Color(0xFF56565a),
-    this.topBarColor=const Color(0xFF1B1C24),
+    this.countryItemHeight = 55,
+    this.itemFlagSize = 30,
+    this.flatFlag = false,
+    this.selectedItemColor = const Color(0xFF56565a),
+    this.topBarColor = const Color(0xFF1B1C24),
     Widget? selectedIcon,
     TextStyle? textStyle,
     TextStyle? searchBoxTextStyle,
@@ -37,12 +44,13 @@ class DialogConfig {
                 color: const Color(0xFFFAFAFA).withOpacity(0.7),
                 fontSize: 14,
                 fontWeight: FontWeight.w600),
-        selectedIcon = selectedIcon??Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Image.asset(
-            "packages/intl_phone_number_field/assets/check.png",
-            width: 20,
-            fit: BoxFit.fitWidth,
-          ),
-        );
+        selectedIcon = selectedIcon ??
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Image.asset(
+                "packages/intl_phone_number_field/assets/check.png",
+                width: 20,
+                fit: BoxFit.fitWidth,
+              ),
+            );
 }

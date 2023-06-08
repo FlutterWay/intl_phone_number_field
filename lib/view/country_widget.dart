@@ -20,8 +20,11 @@ class CountryWidget extends StatelessWidget {
       color: isSelected ? dialogConfig.selectedItemColor : Colors.transparent,
       padding: const EdgeInsets.only(left: 40, right: 55),
       child: Row(children: [
-        FlagView(countryCodeModel: countryCodeModel, size: 25),
-        const SizedBox(width: 30),
+        FlagView(
+            countryCodeModel: countryCodeModel,
+            isFlat: dialogConfig.flatFlag,
+            size: dialogConfig.itemFlagSize),
+        const SizedBox(width: 25),
         Expanded(
           child: Text(
             countryCodeModel.name,

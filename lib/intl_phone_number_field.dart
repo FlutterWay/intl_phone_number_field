@@ -134,7 +134,8 @@ class _InternationalPhoneNumberInputState
                   children: [
                     FlagView(
                       countryCodeModel: selected,
-                      size: 25,
+                      isFlat: widget.countryConfig.flatFlag,
+                      size: widget.countryConfig.flagSize,
                     ),
                     const SizedBox(width: 8),
                     Text(

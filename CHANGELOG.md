@@ -38,3 +38,8 @@
 
 * Added decoration, focusNode, autoFocus, showCursor, backgroundColor parameters to PhoneConfig
 * Any default formatter will no longer work if the formatter parameter is not entered 
+
+## 0.1.6
+
+* Added flatFlag, itemFlagSize parameters to DialogConfig
+* Added flatFlag, flagSize parameters to CountryConfig
