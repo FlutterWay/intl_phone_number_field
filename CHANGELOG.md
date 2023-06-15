@@ -43,3 +43,9 @@
 
 * Added flatFlag, itemFlagSize parameters to DialogConfig
 * Added flatFlag, flagSize parameters to CountryConfig
+
+## 0.1.7
+
+* Added errorColor, errorTextMaxLength, errorStyle, labelStyle, labelText, errorText, popUpErrorText, errorPadding, autovalidateMode, floatingLabelStyle, textInputAction parameters to PhoneConfig
+* Added validator parameters to InternationalPhoneNumberInput
+* Documentation updated

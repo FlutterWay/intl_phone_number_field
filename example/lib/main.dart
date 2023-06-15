@@ -115,16 +115,34 @@ class _MyHomePageState extends State<MyHomePage> {
                           color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w600)),
+                  validator: (number) {
+                    if (number.number.isEmpty) {
+                      return "The phone number cannot be left emptyssss";
+                    }
+                    return null;
+                  },
                   phoneConfig: PhoneConfig(
                     focusedColor: const Color(0xFF6D59BD),
                     enabledColor: const Color(0xFF6D59BD),
+                    errorColor: const Color(0xFFFF5494),
+                    labelStyle: null,
+                    labelText: null,
+                    floatingLabelStyle: null,
+                    focusNode: null,
                     radius: 8,
                     hintText: "Phone Number",
                     borderWidth: 2,
                     backgroundColor: Colors.transparent,
                     decoration: null,
-                    autoFocus: true,
+                    popUpErrorText: true,
+                    autoFocus: false,
                     showCursor: false,
+                    textInputAction: TextInputAction.done,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    errorTextMaxLength: 2,
+                    errorPadding: const EdgeInsets.only(top: 14),
+                    errorStyle: const TextStyle(
+                        color: Color(0xFFFF5494), fontSize: 12, height: 1),
                     textStyle: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -134,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontSize: 16,
                         fontWeight: FontWeight.w400),
                   ),
-                )
+                ),
               ],
             ),
           ),

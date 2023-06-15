@@ -35,6 +35,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final MaskedInputFormatter? formatter;
   final List<TextInputFormatter> inputFormatters;
   final Future<String?> Function()? loadFromJson;
+  final String? Function(IntPhoneNumber number)? validator;
   InternationalPhoneNumberInput(
       {super.key,
       TextEditingController? controller,
@@ -45,6 +46,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       this.onInputChanged,
       this.loadFromJson,
       this.formatter,
+      this.validator,
       DialogConfig? dialogConfig,
       CountryConfig? countryConfig,
       PhoneConfig? phoneConfig})
@@ -66,6 +68,9 @@ class _InternationalPhoneNumberInputState
   List<CountryCodeModel>? countries;
   late CountryCodeModel selected;
 
+  String? errorText;
+  late FocusNode node;
+
   @override
   void initState() {
     selected = widget.initCountry;
@@ -75,111 +80,189 @@ class _InternationalPhoneNumberInputState
       widget.loadFromJson!()
           .then((data) => data != null ? loadFromJson(data) : getAllCountry());
     }
+    node = widget.phoneConfig.focusNode ?? FocusNode();
+    if (widget.phoneConfig.autovalidateMode == AutovalidateMode.always &&
+        widget.validator != null) {
+      String? error = widget.validator!(IntPhoneNumber(
+          code: selected.code,
+          dial_code: selected.dial_code,
+          number: widget.controller.text.trimLeft().trimRight()));
+      if (errorText != error) {
+        errorText = error;
+      }
+    }
+    node.addListener(listenNode);
     super.initState();
   }
 
   @override
+  void dispose() {
+    node.removeListener(listenNode);
+    super.dispose();
+  }
+
+  void listenNode() {
+    if (node.hasFocus &&
+        widget.phoneConfig.autovalidateMode ==
+            AutovalidateMode.onUserInteraction &&
+        widget.validator != null) {
+      String? error = widget.validator!(IntPhoneNumber(
+          code: selected.code,
+          dial_code: selected.dial_code,
+          number: widget.controller.text.trimLeft().trimRight()));
+      if (errorText != error) {
+        errorText = error;
+        if (mounted) setState(() {});
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: widget.height,
-      child: Row(children: [
-        Expanded(
-            flex: 10,
-            child: TextButton(
-              onPressed: () {
-                if (countries != null) {
-                  showModalBottomSheet(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(30))),
-                      barrierColor: Colors.black.withOpacity(0.6),
-                      isScrollControlled: true,
-                      backgroundColor: widget.dialogConfig.backgroundColor,
-                      context: context,
-                      builder: (context) {
-                        return SingleChildScrollView(
-                          child: CountryCodeBottomSheet(
-                            countries: countries!,
-                            selected: selected,
-                            onSelected: (countryCodeModel) {
-                              setState(() {
-                                selected = countryCodeModel;
-                              });
-                              if (widget.onInputChanged != null) {
-                                widget.onInputChanged!(IntPhoneNumber(
-                                    code: selected.code,
-                                    dial_code: selected.dial_code,
-                                    number: widget.controller.text
-                                        .trimLeft()
-                                        .trimRight()));
-                              }
-                            },
-                            dialogConfig: widget.dialogConfig,
-                          ),
-                        );
-                      });
-                }
-              },
-              style: TextButton.styleFrom(
-                minimumSize: Size.zero,
-                padding: EdgeInsets.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: widget.countryConfig.decoration,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FlagView(
-                      countryCodeModel: selected,
-                      isFlat: widget.countryConfig.flatFlag,
-                      size: widget.countryConfig.flagSize,
+    return Column(
+      children: [
+        SizedBox(
+          height: widget.height,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(
+                flex: 10,
+                child: SizedBox(
+                  height: widget.height,
+                  child: TextButton(
+                    onPressed: () {
+                      if (countries != null) {
+                        showModalBottomSheet(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(30))),
+                            barrierColor: Colors.black.withOpacity(0.6),
+                            isScrollControlled: true,
+                            backgroundColor:
+                                widget.dialogConfig.backgroundColor,
+                            context: context,
+                            builder: (context) {
+                              return SingleChildScrollView(
+                                child: CountryCodeBottomSheet(
+                                  countries: countries!,
+                                  selected: selected,
+                                  onSelected: (countryCodeModel) {
+                                    setState(() {
+                                      selected = countryCodeModel;
+                                    });
+                                    if (widget.onInputChanged != null) {
+                                      widget.onInputChanged!(IntPhoneNumber(
+                                          code: selected.code,
+                                          dial_code: selected.dial_code,
+                                          number: widget.controller.text
+                                              .trimLeft()
+                                              .trimRight()));
+                                    }
+                                  },
+                                  dialogConfig: widget.dialogConfig,
+                                ),
+                              );
+                            });
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      selected.dial_code,
-                      style: widget.countryConfig.textStyle,
-                    )
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: widget.countryConfig.decoration,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FlagView(
+                            countryCodeModel: selected,
+                            isFlat: widget.countryConfig.flatFlag,
+                            size: widget.countryConfig.flagSize,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            selected.dial_code,
+                            style: widget.countryConfig.textStyle,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
+            SizedBox(width: widget.betweenPadding),
+            Expanded(
+                flex: 18,
+                child: RixaTextField(
+                  hintText: widget.phoneConfig.hintText ?? "",
+                  hintStyle: widget.phoneConfig.hintStyle,
+                  textStyle: widget.phoneConfig.textStyle,
+                  controller: widget.controller,
+                  focusNode: node,
+                  decoration: widget.phoneConfig.decoration,
+                  errorStyle: widget.phoneConfig.errorStyle,
+                  backgroundColor: widget.phoneConfig.backgroundColor,
+                  labelStyle: widget.phoneConfig.labelStyle,
+                  textInputAction: widget.phoneConfig.textInputAction,
+                  labelText: widget.phoneConfig.labelText,
+                  floatingLabelStyle: widget.phoneConfig.floatingLabelStyle,
+                  radius: widget.phoneConfig.radius,
+                  isUnderline: false,
+                  textInputType: TextInputType.number,
+                  expands: true,
+                  autoFocus: widget.phoneConfig.autoFocus,
+                  inputFormatters: [
+                    ...widget.inputFormatters,
+                    if (widget.formatter != null) widget.formatter!
                   ],
-                ),
-              ),
-            )),
-        SizedBox(width: widget.betweenPadding),
-        Expanded(
-            flex: 18,
-            child: RixaTextField(
-              hintText: widget.phoneConfig.hintText ?? "",
-              hintStyle: widget.phoneConfig.hintStyle,
-              textStyle: widget.phoneConfig.textStyle,
-              controller: widget.controller,
-              focusNode: widget.phoneConfig.focusNode,
-              decoration: widget.phoneConfig.decoration,
-              backgroundColor: widget.phoneConfig.backgroundColor,
-              radius: widget.phoneConfig.radius,
-              isUnderline: false,
-              textInputType: TextInputType.number,
-              expands: true,
-              autoFocus: widget.phoneConfig.autoFocus,
-              inputFormatters: [
-                ...widget.inputFormatters,
-                if (widget.formatter != null) widget.formatter!
-              ],
-              focusedColor: widget.phoneConfig.focusedColor,
-              enabledColor: widget.phoneConfig.enabledColor,
-              showCursor: widget.phoneConfig.showCursor,
-              borderWidth: widget.phoneConfig.borderWidth,
-              onChanged: (text) {
-                if (widget.onInputChanged != null) {
-                  widget.onInputChanged!(IntPhoneNumber(
-                      code: selected.code,
-                      dial_code: selected.dial_code,
-                      number: text.trimLeft().trimRight()));
-                }
-              },
-            )),
-      ]),
+                  focusedColor: errorText != null
+                      ? widget.phoneConfig.errorColor
+                      : widget.phoneConfig.focusedColor,
+                  enabledColor: errorText != null
+                      ? widget.phoneConfig.errorColor
+                      : widget.phoneConfig.enabledColor,
+                  showCursor: widget.phoneConfig.showCursor,
+                  borderWidth: widget.phoneConfig.borderWidth,
+                  onChanged: (text) {
+                    if (widget.onInputChanged != null) {
+                      widget.onInputChanged!(IntPhoneNumber(
+                          code: selected.code,
+                          dial_code: selected.dial_code,
+                          number: text.trimLeft().trimRight()));
+                    }
+                    if (widget.validator != null) {
+                      String? error = widget.validator!(IntPhoneNumber(
+                          code: selected.code,
+                          dial_code: selected.dial_code,
+                          number: text.trimLeft().trimRight()));
+                      if (errorText != error) {
+                        setState(() {
+                          errorText = error;
+                        });
+                      }
+                    }
+                  },
+                )),
+          ]),
+        ),
+        if ((widget.phoneConfig.popUpErrorText && errorText != null) ||
+            !widget.phoneConfig.popUpErrorText)
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: widget.phoneConfig.errorPadding,
+              child: Row(children: [
+                Text(
+                  errorText ?? "",
+                  style: widget.phoneConfig.errorStyle,
+                  maxLines: widget.phoneConfig.errorTextMaxLength,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ]),
+            ),
+          )
+      ],
     );
   }
 
