@@ -86,7 +86,7 @@ class RixaTextField extends StatelessWidget {
                         color: enabledColor ?? Colors.black,
                         width: borderWidth ?? 1),
                     borderRadius: BorderRadius.circular(radius))
-                : null,
+                : InputBorder.none,
         errorBorder = !noInputBorder && isUnderline
             ? UnderlineInputBorder(
                 borderSide: BorderSide(
@@ -99,7 +99,7 @@ class RixaTextField extends StatelessWidget {
                         color: errorColor ?? const Color(0xFFFF5494),
                         width: borderWidth ?? 1),
                     borderRadius: BorderRadius.circular(radius))
-                : null,
+                : InputBorder.none,
         focusedBorder = !noInputBorder && isUnderline
             ? UnderlineInputBorder(
                 borderSide: BorderSide(
@@ -112,7 +112,7 @@ class RixaTextField extends StatelessWidget {
                         color: focusedColor ?? Colors.cyan,
                         width: borderWidth ?? 1),
                     borderRadius: BorderRadius.circular(radius))
-                : null;
+                : InputBorder.none;
   @override
   Widget build(BuildContext context) {
     return Container(

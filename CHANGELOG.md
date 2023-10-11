@@ -49,3 +49,7 @@
 * Added errorColor, errorTextMaxLength, errorStyle, labelStyle, labelText, errorText, popUpErrorText, errorPadding, autovalidateMode, floatingLabelStyle, textInputAction parameters to PhoneConfig
 * Added validator parameters to InternationalPhoneNumberInput
 * Documentation updated
+
+## 0.1.8
+
+* searchBoxHintStyle, title, searchHintText

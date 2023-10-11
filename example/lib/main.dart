@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     searchBoxBackgroundColor: const Color(0xFF56565a),
                     searchBoxIconColor: const Color(0xFFFAFAFA),
                     countryItemHeight: 55,
+                    flatFlag: true,
                     topBarColor: const Color(0xFF1B1C24),
                     selectedItemColor: const Color(0xFF56565a),
                     selectedIcon: Padding(
@@ -110,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 2, color: const Color(0xFF3f4046)),
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      flatFlag: true,
                       noFlag: false,
                       textStyle: const TextStyle(
                           color: Colors.black,

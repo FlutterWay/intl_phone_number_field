@@ -7,9 +7,11 @@ class DialogConfig {
       selectedItemColor,
       topBarColor;
   TextStyle textStyle, searchBoxTextStyle, searchBoxHintStyle, titleStyle;
+  double searchBoxRadius;
   Widget selectedIcon;
   double countryItemHeight, itemFlagSize;
   bool flatFlag;
+  String title, searchHintText;
   DialogConfig({
     this.backgroundColor = const Color(0xFF444448),
     this.searchBoxBackgroundColor = const Color(0xFF56565a),
@@ -19,6 +21,9 @@ class DialogConfig {
     this.flatFlag = false,
     this.selectedItemColor = const Color(0xFF56565a),
     this.topBarColor = const Color(0xFF1B1C24),
+    this.searchBoxRadius = 7,
+    this.title = "Country Codes",
+    this.searchHintText = "Search",
     Widget? selectedIcon,
     TextStyle? textStyle,
     TextStyle? searchBoxTextStyle,

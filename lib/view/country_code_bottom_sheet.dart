@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/country_code_model.dart';
 import '../models/dialog_config.dart';
 import 'country_widget.dart';
@@ -51,15 +52,18 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
               )),
               const SizedBox(height: 25),
               Text(
-                "Country Codes",
+                widget.dialogConfig.title,
                 style: widget.dialogConfig.titleStyle,
               ),
               const SizedBox(height: 14),
               RixaTextField(
-                hintText: "Search",
+                hintText: widget.dialogConfig.searchHintText,
                 controller: searchController,
                 textStyle: widget.dialogConfig.searchBoxTextStyle,
                 hintStyle: widget.dialogConfig.searchBoxHintStyle,
+                radius: widget.dialogConfig.searchBoxRadius,
+                enabledColor: Colors.transparent,
+                focusedColor: Colors.transparent,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 24),
                   child: Icon(
