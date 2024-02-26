@@ -53,3 +53,7 @@
 ## 0.1.8
 
 * searchBoxHintStyle, title, searchHintText
+
+## 0.1.9
+
+* inactive added

@@ -8,6 +8,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+
 import 'models/country_code_model.dart';
 import 'models/country_config.dart';
 import 'models/dialog_config.dart';
@@ -18,6 +19,7 @@ import 'view/flag_view.dart';
 import 'view/rixa_textfield.dart';
 
 export 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+
 export 'models/country_code_model.dart';
 export 'models/country_config.dart';
 export 'models/dialog_config.dart';
@@ -26,6 +28,7 @@ export 'models/phone_config.dart';
 class InternationalPhoneNumberInput extends StatefulWidget {
   final TextEditingController controller;
   final double? height;
+  final bool inactive;
   final DialogConfig dialogConfig;
   final CountryConfig countryConfig;
   final PhoneConfig phoneConfig;
@@ -47,6 +50,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       this.loadFromJson,
       this.formatter,
       this.validator,
+      this.inactive = false,
       DialogConfig? dialogConfig,
       CountryConfig? countryConfig,
       PhoneConfig? phoneConfig})
@@ -130,7 +134,7 @@ class _InternationalPhoneNumberInputState
                   height: widget.height,
                   child: TextButton(
                     onPressed: () {
-                      if (countries != null) {
+                      if (!widget.inactive && countries != null) {
                         showModalBottomSheet(
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
