@@ -181,12 +181,14 @@ class _InternationalPhoneNumberInputState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FlagView(
-                            countryCodeModel: selected,
-                            isFlat: widget.countryConfig.flatFlag,
-                            size: widget.countryConfig.flagSize,
-                          ),
-                          const SizedBox(width: 8),
+                          if (!widget.countryConfig.noFlag) ...[
+                            FlagView(
+                              countryCodeModel: selected,
+                              isFlat: widget.countryConfig.flatFlag,
+                              size: widget.countryConfig.flagSize,
+                            ),
+                            const SizedBox(width: 8),
+                          ],
                           Text(
                             selected.dial_code,
                             style: widget.countryConfig.textStyle,
