@@ -155,6 +155,7 @@ class _InternationalPhoneNumberInputState
                                     });
                                     if (widget.onInputChanged != null) {
                                       widget.onInputChanged!(IntPhoneNumber(
+                                          name: selected.name,
                                           code: selected.code,
                                           dial_code: selected.dial_code,
                                           number: widget.controller.text
@@ -231,6 +232,7 @@ class _InternationalPhoneNumberInputState
                   onChanged: (text) {
                     if (widget.onInputChanged != null) {
                       widget.onInputChanged!(IntPhoneNumber(
+                          name: selected.name,
                           code: selected.code,
                           dial_code: selected.dial_code,
                           number: text.trimLeft().trimRight()));
@@ -292,9 +294,9 @@ class _InternationalPhoneNumberInputState
 }
 
 class IntPhoneNumber {
-  String code, dial_code, number;
+  String code, dial_code, number, name;
   IntPhoneNumber(
-      {required this.code, required this.dial_code, required this.number});
+      {required this.code, required this.dial_code, required this.number, this.name = ""});
   String get fullNumber => "$dial_code $number";
   String get rawNumber => number.replaceAll(" ", "");
   String get rawDialCode => dial_code.replaceAll("+", "");
