@@ -19,6 +19,7 @@ import 'view/flag_view.dart';
 import 'view/rixa_textfield.dart';
 
 export 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+export 'package:intl_phone_number_field/view/flag_view.dart';
 
 export 'models/country_code_model.dart';
 export 'models/country_config.dart';
@@ -64,10 +65,10 @@ class InternationalPhoneNumberInput extends StatefulWidget {
 
   @override
   State<InternationalPhoneNumberInput> createState() =>
-      _InternationalPhoneNumberInputState();
+      InternationalPhoneNumberInputState();
 }
 
-class _InternationalPhoneNumberInputState
+class InternationalPhoneNumberInputState
     extends State<InternationalPhoneNumberInput> {
   List<CountryCodeModel>? countries;
   late CountryCodeModel selected;
@@ -121,6 +122,43 @@ class _InternationalPhoneNumberInputState
     }
   }
 
+  void showFlagBottomSheet() {
+    if (!widget.inactive && countries != null) {
+      showModalBottomSheet(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          ),
+          barrierColor: Colors.black.withOpacity(0.6),
+          isScrollControlled: true,
+          backgroundColor: widget.dialogConfig.backgroundColor,
+          context: context,
+          builder: (context) {
+            return SingleChildScrollView(
+              child: CountryCodeBottomSheet(
+                countries: countries!,
+                selected: selected,
+                onSelected: (countryCodeModel) {
+                  setState(() {
+                    selected = countryCodeModel;
+                  });
+                  if (widget.onInputChanged != null) {
+                    widget.onInputChanged!(
+                      IntPhoneNumber(
+                        name: selected.name,
+                        code: selected.code,
+                        dial_code: selected.dial_code,
+                        number: widget.controller.text.trimLeft().trimRight(),
+                      ),
+                    );
+                  }
+                },
+                dialogConfig: widget.dialogConfig,
+              ),
+            );
+          });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -129,46 +167,11 @@ class _InternationalPhoneNumberInputState
           height: widget.height,
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Expanded(
-                flex: 10,
+                flex: widget.countryConfig.flex,
                 child: SizedBox(
                   height: widget.height,
                   child: TextButton(
-                    onPressed: () {
-                      if (!widget.inactive && countries != null) {
-                        showModalBottomSheet(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(30))),
-                            barrierColor: Colors.black.withOpacity(0.6),
-                            isScrollControlled: true,
-                            backgroundColor:
-                                widget.dialogConfig.backgroundColor,
-                            context: context,
-                            builder: (context) {
-                              return SingleChildScrollView(
-                                child: CountryCodeBottomSheet(
-                                  countries: countries!,
-                                  selected: selected,
-                                  onSelected: (countryCodeModel) {
-                                    setState(() {
-                                      selected = countryCodeModel;
-                                    });
-                                    if (widget.onInputChanged != null) {
-                                      widget.onInputChanged!(IntPhoneNumber(
-                                          name: selected.name,
-                                          code: selected.code,
-                                          dial_code: selected.dial_code,
-                                          number: widget.controller.text
-                                              .trimLeft()
-                                              .trimRight()));
-                                    }
-                                  },
-                                  dialogConfig: widget.dialogConfig,
-                                ),
-                              );
-                            });
-                      }
-                    },
+                    onPressed: showFlagBottomSheet,
                     style: TextButton.styleFrom(
                       minimumSize: Size.zero,
                       padding: EdgeInsets.zero,
@@ -200,7 +203,7 @@ class _InternationalPhoneNumberInputState
                 )),
             SizedBox(width: widget.betweenPadding),
             Expanded(
-                flex: 18,
+                flex: widget.phoneConfig.flex,
                 child: RixaTextField(
                   hintText: widget.phoneConfig.hintText ?? "",
                   hintStyle: widget.phoneConfig.hintStyle,

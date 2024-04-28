@@ -1,0 +1,8 @@
+{
+  "[dart]": {
+    "editor.formatOnSave": false,
+    "editor.rulers": [80],
+  },
+  "dart.lineLength": 80,
+  "dart.flutterSdkPath": ".fvm/versions/stable"
+}

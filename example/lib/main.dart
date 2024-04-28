@@ -36,6 +36,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controller = TextEditingController();
   String? data;
+  GlobalKey<InternationalPhoneNumberInputState> inputKey = GlobalKey();
+  CountryCodeModel countryCodeModel = CountryCodeModel(name: "United States", dial_code: "+1", code: "US");
+
 
   @override
   void initState() {
@@ -55,13 +58,33 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    inputKey.currentState?.showFlagBottomSheet();
+                  },
+                  child: Container(
+                    alignment: AlignmentDirectional.centerStart,
+                    padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FlagView(
+                            countryCodeModel: countryCodeModel,
+                            size: 32,
+                            isFlat: false),
+                        const SizedBox(width: 5),
+                        Text(countryCodeModel.name),
+                      ],
+                    ),
+                  ),
+                ),
                 InternationalPhoneNumberInput(
+                  key: inputKey,
                   height: 60,
                   controller: controller,
                   inputFormatters: const [],
                   formatter: MaskedInputFormatter('### ### ## ##'),
-                  initCountry: CountryCodeModel(
-                      name: "United States", dial_code: "+1", code: "US"),
+                  initCountry: countryCodeModel,
                   betweenPadding: 23,
                   onInputChanged: (phone) {
                     print(phone.code);
@@ -70,6 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     print(phone.rawFullNumber);
                     print(phone.rawNumber);
                     print(phone.rawDialCode);
+                    setState(() {
+                      countryCodeModel = CountryCodeModel(
+                        name: phone.name,
+                        dial_code: phone.dial_code,
+                        code: phone.code,
+                      );
+                    });
                   },
                   loadFromJson: loadFromJson,
                   dialogConfig: DialogConfig(
@@ -112,7 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       flatFlag: true,
-                      noFlag: false,
+                      noFlag: true,
+                      flex: 5,
                       textStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -162,6 +193,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> loadFromJson() async {
-    return await rootBundle.loadString('assets/countries/country_list.json');
+    return await rootBundle.loadString('assets/countries/country_list_en.json');
   }
 }
