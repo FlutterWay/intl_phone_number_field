@@ -17,11 +17,13 @@ class PhoneConfig {
   AutovalidateMode autovalidateMode;
   final TextStyle? floatingLabelStyle;
   final TextInputAction textInputAction;
+  final int flex;
   PhoneConfig(
       {this.focusedColor = const Color(0xFF6D59BD),
       this.enabledColor = const Color(0xFF6D59BD),
       this.errorPadding = const EdgeInsets.only(top: 14),
       this.radius = 8,
+      this.flex = 18,
       this.autovalidateMode = AutovalidateMode.onUserInteraction,
       this.textInputAction = TextInputAction.done,
       this.hintText = "Phone Number",

@@ -6,9 +6,11 @@ class CountryConfig {
   Decoration decoration;
   bool flatFlag;
   double flagSize;
+  final int flex;
   CountryConfig({
     this.noFlag = false,
     this.flagSize = 30,
+    this.flex = 10,
     this.flatFlag = false,
     Decoration? decoration,
     this.textStyle = const TextStyle(
