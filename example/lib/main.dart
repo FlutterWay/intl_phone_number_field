@@ -162,6 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> loadFromJson() async {
-    return await rootBundle.loadString('assets/countries/country_list.json');
+    return await rootBundle.loadString('assets/countries/country_list_en.json');
   }
 }

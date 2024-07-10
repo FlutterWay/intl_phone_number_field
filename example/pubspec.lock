@@ -122,10 +122,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_multi_formatter
-      sha256: "4798b3ee8a3c00271565e77dc8886f02b52354c3ac0d845e07d1715d159959f6"
+      sha256: "3495dc0056c96e467039a05bd184a5285c271a0efb2024a7030c7e84ba828994"
       url: "https://pub.dev"
     source: hosted
-    version: "2.12.4"
+    version: "2.12.8"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -153,7 +153,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.8"
+    version: "0.2.0"
   jovial_misc:
     dependency: transitive
     description:
@@ -182,10 +182,10 @@ packages:
     dependency: transitive
     description:
       name: json_annotation
-      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
+      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
       url: "https://pub.dev"
     source: hosted
-    version: "4.8.1"
+    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:

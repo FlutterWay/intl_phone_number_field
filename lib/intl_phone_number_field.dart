@@ -96,11 +96,33 @@ class _InternationalPhoneNumberInputState
       }
     }
     node.addListener(listenNode);
+    widget.controller.addListener(controllerOnChange);
     super.initState();
+  }
+
+  void controllerOnChange() {
+    if (widget.onInputChanged != null) {
+      widget.onInputChanged!(IntPhoneNumber(
+          code: selected.code,
+          dial_code: selected.dial_code,
+          number: widget.controller.text.trimLeft().trimRight()));
+    }
+    if (widget.validator != null) {
+      String? error = widget.validator!(IntPhoneNumber(
+          code: selected.code,
+          dial_code: selected.dial_code,
+          number: widget.controller.text.trimLeft().trimRight()));
+      if (errorText != error) {
+        setState(() {
+          errorText = error;
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
+    widget.controller.removeListener(controllerOnChange);
     node.removeListener(listenNode);
     super.dispose();
   }
@@ -228,25 +250,6 @@ class _InternationalPhoneNumberInputState
                       : widget.phoneConfig.enabledColor,
                   showCursor: widget.phoneConfig.showCursor,
                   borderWidth: widget.phoneConfig.borderWidth,
-                  onChanged: (text) {
-                    if (widget.onInputChanged != null) {
-                      widget.onInputChanged!(IntPhoneNumber(
-                          code: selected.code,
-                          dial_code: selected.dial_code,
-                          number: text.trimLeft().trimRight()));
-                    }
-                    if (widget.validator != null) {
-                      String? error = widget.validator!(IntPhoneNumber(
-                          code: selected.code,
-                          dial_code: selected.dial_code,
-                          number: text.trimLeft().trimRight()));
-                      if (errorText != error) {
-                        setState(() {
-                          errorText = error;
-                        });
-                      }
-                    }
-                  },
                 )),
           ]),
         ),

@@ -57,3 +57,9 @@
 ## 0.1.9
 
 * inactive added
+
+## 0.2.0
+
+* Fixed backspace not working sometimes
+* packages upgraded
+* example file updated
