@@ -39,6 +39,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final Future<String?> Function()? loadFromJson;
   final String? Function(IntPhoneNumber number)? validator;
+  final double? countryPickerWidth;
   InternationalPhoneNumberInput(
       {super.key,
       TextEditingController? controller,
@@ -51,6 +52,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
       this.formatter,
       this.validator,
       this.inactive = false,
+      this.countryPickerWidth,
       DialogConfig? dialogConfig,
       CountryConfig? countryConfig,
       PhoneConfig? phoneConfig})
@@ -150,8 +152,75 @@ class _InternationalPhoneNumberInputState
         SizedBox(
           height: widget.height,
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-                flex: 10,
+            widget.countryPickerWidth != null ?
+                SizedBox(
+                  width: widget.countryPickerWidth,
+                  height: widget.height,
+                  child: TextButton(
+                    onPressed: () {
+                      if (!widget.inactive && countries != null) {
+                        showModalBottomSheet(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(30))),
+                            barrierColor: Colors.black.withOpacity(0.6),
+                            isScrollControlled: true,
+                            backgroundColor:
+                                widget.dialogConfig.backgroundColor,
+                            context: context,
+                            builder: (context) {
+                              return SingleChildScrollView(
+                                child: CountryCodeBottomSheet(
+                                  countries: countries!,
+                                  selected: selected,
+                                  onSelected: (countryCodeModel) {
+                                    setState(() {
+                                      selected = countryCodeModel;
+                                    });
+                                    if (widget.onInputChanged != null) {
+                                      widget.onInputChanged!(IntPhoneNumber(
+                                          code: selected.code,
+                                          dial_code: selected.dial_code,
+                                          number: widget.controller.text
+                                              .trimLeft()
+                                              .trimRight()));
+                                    }
+                                  },
+                                  dialogConfig: widget.dialogConfig,
+                                ),
+                              );
+                            });
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: widget.countryConfig.decoration,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FlagView(
+                            countryCodeModel: selected,
+                            isFlat: widget.countryConfig.flatFlag,
+                            size: widget.countryConfig.flagSize,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            selected.dial_code,
+                            style: widget.countryConfig.textStyle,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+            : Expanded(
+                flex: widget.countryPickerWidth != null ? 1 : 10,
                 child: SizedBox(
                   height: widget.height,
                   child: TextButton(
