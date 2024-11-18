@@ -16,7 +16,6 @@ class RixaTextField extends StatelessWidget {
   final bool showCursor;
   final double? width;
   final Color? focusedColor, backgroundColor;
-  final dynamic Function(String)? onChanged;
   final bool isUnderline, expands, noInputBorder;
   final TextInputType textInputType;
   final Widget? prefixIcon, suffixIcon;
@@ -49,7 +48,6 @@ class RixaTextField extends StatelessWidget {
     this.color,
     this.borderWidth,
     this.radius = 10.0,
-    this.onChanged,
     this.focusNode,
     this.enabledColor,
     this.focusedColor,
@@ -155,9 +153,6 @@ class RixaTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
             floatingLabelStyle: floatingLabelStyle),
-        onChanged: (text) {
-          if (onChanged != null) onChanged!(text);
-        },
       ),
     );
   }
@@ -176,7 +171,6 @@ class RixaTextFieldFull extends StatelessWidget {
   final Color? color;
   final Color? enabledColor;
   final Color? focusedColor, backgroundColor;
-  final dynamic onChanged;
   final bool autoFocus;
   final int maxLines;
   final int? minLines;
@@ -212,7 +206,6 @@ class RixaTextFieldFull extends StatelessWidget {
     this.autoFocus = false,
     this.backgroundColor,
     this.error = false,
-    this.onChanged,
     this.minLines,
     this.isUnderline = true,
     this.noInputBorder = false,
@@ -255,7 +248,6 @@ class RixaTextFieldFull extends StatelessWidget {
           width: width,
           focusedColor: focusedColor,
           backgroundColor: backgroundColor,
-          onChanged: onChanged,
           isUnderline: isUnderline,
           noInputBorder: noInputBorder,
           textInputType: textInputType,

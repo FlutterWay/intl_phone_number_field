@@ -28,7 +28,19 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
   void initState() {
     mainCountries = widget.countries;
     searchCountries = widget.countries.toList();
+    searchController.addListener(listenSearchController);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(listenSearchController);
+    super.dispose();
+  }
+
+  void listenSearchController() {
+    search(searchController.text);
   }
 
   @override
@@ -72,9 +84,6 @@ class _CountryCodeBottomSheetState extends State<CountryCodeBottomSheet> {
                     size: 20,
                   ),
                 ),
-                onChanged: (value) {
-                  search(value);
-                },
                 isUnderline: false,
                 noInputBorder: true,
                 backgroundColor: widget.dialogConfig.searchBoxBackgroundColor,

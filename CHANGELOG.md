@@ -1,65 +1,69 @@
 ## 0.0.1
 
-* init
-  
+- init
+
 ## 0.0.2
 
-* init
-  
+- init
+
 ## 0.0.3
 
-* init
-  
+- init
+
 ## 0.0.4
 
-* init
-  
+- init
+
 ## 0.1.0
 
-* init
-  
+- init
+
 ## 0.1.1
 
-* init
-  
+- init
+
 ## 0.1.2
 
-* Dart sdk setted sdk: '>=2.18.5 <4.0.0'
-  
+- Dart sdk setted sdk: '>=2.18.5 <4.0.0'
+
 ## 0.1.3
 
-* Readme updated
-  
+- Readme updated
+
 ## 0.1.4
 
-* Changes made
-  
+- Changes made
+
 ## 0.1.5
 
-* Added decoration, focusNode, autoFocus, showCursor, backgroundColor parameters to PhoneConfig
-* Any default formatter will no longer work if the formatter parameter is not entered 
+- Added decoration, focusNode, autoFocus, showCursor, backgroundColor parameters to PhoneConfig
+- Any default formatter will no longer work if the formatter parameter is not entered
 
 ## 0.1.6
 
-* Added flatFlag, itemFlagSize parameters to DialogConfig
-* Added flatFlag, flagSize parameters to CountryConfig
+- Added flatFlag, itemFlagSize parameters to DialogConfig
+- Added flatFlag, flagSize parameters to CountryConfig
 
 ## 0.1.7
 
-* Added errorColor, errorTextMaxLength, errorStyle, labelStyle, labelText, errorText, popUpErrorText, errorPadding, autovalidateMode, floatingLabelStyle, textInputAction parameters to PhoneConfig
-* Added validator parameters to InternationalPhoneNumberInput
-* Documentation updated
+- Added errorColor, errorTextMaxLength, errorStyle, labelStyle, labelText, errorText, popUpErrorText, errorPadding, autovalidateMode, floatingLabelStyle, textInputAction parameters to PhoneConfig
+- Added validator parameters to InternationalPhoneNumberInput
+- Documentation updated
 
 ## 0.1.8
 
-* searchBoxHintStyle, title, searchHintText
+- searchBoxHintStyle, title, searchHintText
 
 ## 0.1.9
 
-* inactive added
+- inactive added
 
 ## 0.2.0
 
-* Fixed backspace not working sometimes
-* packages upgraded
-* example file updated
+- Fixed backspace not working sometimes
+- packages upgraded
+- example file updated
+
+## 0.2.1
+
+- Onchanged removed from all textfields
